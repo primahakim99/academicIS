@@ -15,10 +15,12 @@ class CreateStudentTable extends Migration
     {
         Schema::create('student', function (Blueprint $table) {
             $table->id('id_student');
-            $table->string('nim', 10)->index();
-            $table->string('name', 25)->index();
-            $table->string('class', 5);
-            $table->string('major',35);
+            $table->string('nim')->index();
+            $table->string('name')->index();
+            $table->string('class');
+            $table->string('major');
+            $table->string('address');
+            $table->date('dob');
             $table->timestamps();
 
         });

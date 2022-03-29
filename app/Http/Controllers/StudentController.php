@@ -15,11 +15,11 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Student::all(); // Mengambil semua isi tabel
-        $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
-        return view('student.index', ['student' => $student,'paginate'=>$paginate]);
-
-
+        // $student = Student::all(); // Mengambil semua isi tabel
+        // $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
+        return view('student.index', [
+            'student' => Student::orderBy('id_student', 'asc')->simplePaginate(3)->withQueryString()
+        ]);
     }
 
     /**
@@ -46,6 +46,8 @@ class StudentController extends Controller
             'Name' => 'required',
             'Class' => 'required',
             'Major' => 'required',
+            'Address' => 'required',
+            'Dob' => 'required',
         ]);
 
         // eloquent function to add data
@@ -100,6 +102,8 @@ class StudentController extends Controller
             'Name' => 'required',
             'Class' => 'required',
             'Major' => 'required',
+            'Address' => 'required',
+            'Dob' => 'required',
         ]);
 
  //Eloquent function to update the data
@@ -109,6 +113,8 @@ class StudentController extends Controller
                 'name'=>$request->Name,
                 'class'=>$request->Class,
                 'major'=>$request->Major,
+                'adress'=>$request->Address,
+                'dob'=>$request->Dob,
             ]);
 
 //if the data successfully updated, will return to main page
