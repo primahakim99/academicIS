@@ -34,6 +34,10 @@ class Student extends Model
         return $this->belongsTo(ClassModel::class);
     }
 
+    public function course(){
+        return $this->belongsToMany(Course::class, 'course_student', 'student_id')
+        ->withPivot('value');;
+    }
 
     public function search($query, array $searching)
     {

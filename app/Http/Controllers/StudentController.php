@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\ClassModel;
+use App\Models\Course;
+use App\Models\CourseStudent;
 use DB;
 
 class StudentController extends Controller
@@ -149,6 +151,13 @@ class StudentController extends Controller
         return redirect()->route('student.index')
             ->with('success', 'Student Successfully Updated');
 
+    }
+
+    public function nilai($nim)
+    {
+        $Student = Student::with('course')->where('nim', $nim)->first();
+        $course_student = CourseStudent::all();
+        return view('student.nilai', compact('Student','course_student'));
     }
 
     /**
