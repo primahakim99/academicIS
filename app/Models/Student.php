@@ -20,14 +20,20 @@ class Student extends Model
      */
     protected $guarded =['id_student'];
 
-    // protected $fillable = [
-    //     'Nim',
-    //     'Name',
-    //     'Class',
-    //     'Major',
-    //     'Address',
-    //     'Dob',
-    // ];
+    protected $fillable = [
+        'Nim',
+        'Name',
+        'Class',
+        'Major',
+        'Address',
+        'Dob',
+    ];
+
+    public function class()
+    {
+        return $this->belongsTo(ClassModel::class);
+    }
+
 
     public function search($query, array $searching)
     {

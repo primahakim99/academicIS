@@ -31,21 +31,24 @@
                     <input type="text" name="Name" class="form-control" id="Name" value="{{ $Student->name }}" aria-describedby="Name" >
                 </div>
                 <div class="form-group">
-                    <label for="Class">Class</label>
-                    <input type="Class" name="Class" class="form-control" id="Class" value="{{ $Student->class }}" aria-describedby="Class" >
+                    <select name = "Class" class="form-control">
+                        @foreach ($class as $kls)
+                            <option value="{{ $kls->id }}" {{ $Student->class_id == $kls->id ? 'selected' : '' }}>{{ $kls -> class_name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="Major">Major</label>
                     <input type="Major" name="Major" class="form-control" id="Major" value="{{ $Student->major }}" aria-describedby="Major" >
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="Address ">Address </label>
                     <input type="Address " name="Address " class="form-control" id="Address " value="{{ $Student->adress }}" aria-describedby="Address " >
                 </div>
                 <div class="form-group">
                     <label for="Dob">Date of Birth<br>(YYYY-MM-DD)</label>
                     <input type="Dob" name="Dob" class="form-control" id="Dob" value="{{ $Student->dob }}" aria-describedby="Dob" >
-                </div>
+                </div> --}}
             <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             </div>

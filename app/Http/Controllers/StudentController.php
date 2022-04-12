@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\ClassModel;
 use DB;
 
 class StudentController extends Controller
@@ -16,7 +17,11 @@ class StudentController extends Controller
     public function index()
     {
         // $student = Student::all(); // Mengambil semua isi tabel
-        // $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
+        // $paginate = Student::orderBy('id_student', 'asc')->simplePaginate(3)->withQueryString();
+        // return view('student.Index', [
+        //     'student' => $student,
+        //     'paginate' => $paginate
+        // ]);
         return view('student.index', [
             'student' => Student::orderBy('id_student', 'asc')->simplePaginate(3)->withQueryString()
         ]);
@@ -29,7 +34,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('student.create');
+        $class = ClassModel::all();
+        return view('student.create', ['class' => $class]);
     }
 
     /**
@@ -46,12 +52,21 @@ class StudentController extends Controller
             'Name' => 'required',
             'Class' => 'required',
             'Major' => 'required',
-            'Address' => 'required',
-            'Dob' => 'required',
         ]);
 
+        $student = new Student;
+        $student->nim = $request->get('Nim');
+        $student->name = $request->get('Name');
+        $student->major = $request->get('Major');
+        $student->save();
+
+        $class = new ClassModel;
+        $class->id = $request->get('Class');
+
         // eloquent function to add data
-        Student::create($request->all());
+        // Student::create($request->all());
+        $student->class()->associate($class);
+        $student->save();
 
         // if the data is added successfully, will return to the main page
         return redirect()->route('student.index')
@@ -68,7 +83,8 @@ class StudentController extends Controller
     public function show($nim)
     {
         // displays detailed data by finding / by Student Nim
-        $Student = Student::where('nim', $nim)->first();
+        // $Student = Student::where('nim', $nim)->first();
+        $Student = Student::with('class')->where('nim', $nim)->first();
         return view('student.detail', compact('Student'));
 
     }
@@ -82,8 +98,10 @@ class StudentController extends Controller
     public function edit($nim)
     {
         // displays detail data by finding based on Student Nim for editing
-        $Student = Student::where('nim', $nim)->first();
-        return view('student.edit', compact('Student'));
+        // $Student = Student::where('nim', $nim)->first();
+        $Student = Student::with('class')->where('nim', $nim)->first();
+        $class = ClassModel::all();
+        return view('student.edit', compact('Student', 'class'));
 
     }
 
@@ -102,20 +120,30 @@ class StudentController extends Controller
             'Name' => 'required',
             'Class' => 'required',
             'Major' => 'required',
-            'Address' => 'required',
-            'Dob' => 'required',
         ]);
 
  //Eloquent function to update the data
-        Student::where('nim', $nim)
-            ->update([
-                'nim'=>$request->Nim,
-                'name'=>$request->Name,
-                'class'=>$request->Class,
-                'major'=>$request->Major,
-                'adress'=>$request->Address,
-                'dob'=>$request->Dob,
-            ]);
+        Student::with('class')->where('nim', $nim)->first();
+
+        $student->nim = $request->get('Nim');
+        $student->name = $request->get('Name');
+        $student->major = $request->get('Major');
+        $student->save();
+
+        $class = new ClassModel;
+        $class->id = $request->get('Class');
+//
+        $student->class()->associate($class);
+        $student->save();
+        // Student::where('nim', $nim)
+        //     ->update([
+        //         'nim'=>$request->Nim,
+        //         'name'=>$request->Name,
+        //         'class'=>$request->Class,
+        //         'major'=>$request->Major,
+        //         'adress'=>$request->Address,
+        //         'dob'=>$request->Dob,
+        //     ]);
 
 //if the data successfully updated, will return to main page
         return redirect()->route('student.index')

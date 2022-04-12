@@ -37,18 +37,18 @@
             <th>Name</th>
             <th>Class</th>
             <th>Major</th>
-            <th>Address</th>
-            <th>Date of Birth</th>
+            {{-- <th>Address</th>
+            <th>Date of Birth</th> --}}
             <th width="280px">Action</th>
         </tr>
         @foreach ($student as $mhs)
         <tr>
             <td>{{ $mhs ->nim }}</td>
             <td>{{ $mhs ->name }}</td>
-            <td>{{ $mhs ->class }}</td>
+            <td>{{ $mhs ->class ->class_name}}</td>
             <td>{{ $mhs ->major }}</td>
-            <td>{{ $mhs ->address }}</td>
-            <td>{{ $mhs ->dob }}</td>
+            {{-- <td>{{ $mhs ->address }}</td>
+            <td>{{ $mhs ->dob }}</td> --}}
             <td>
             <form action="{{ route('student.destroy',['student'=>$mhs->nim]) }}" method="POST">
 
