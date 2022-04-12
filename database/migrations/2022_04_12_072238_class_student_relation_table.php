@@ -13,11 +13,11 @@ class ClassStudentRelationTable extends Migration
      */
     public function up()
     {
-        Schema::table('student', function (Blueprint $table) {
-            $table->dropColumn('class');//delete
-            $table->unsignedBigInteger('class_id')->nullable();//add column
-            $table->foreign('class_id')->refrences('id')->on('class');//add foreign key
-        });
+        // Schema::table('student', function (Blueprint $table) {
+        //     $table->dropColumn('class');//delete
+        //     $table->unsignedBigInteger('class_id')->nullable();//add column
+        //     $table->foreign('class_id')->refrences('id')->on('class');//add foreign key
+        // });
     }
 
     /**
