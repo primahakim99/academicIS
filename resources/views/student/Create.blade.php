@@ -20,7 +20,7 @@
                     </ul>
                 </div>
             @endif
-            <form method="post" action="{{ route('student.store') }}" id="myForm">
+            <form method="post" action="{{ route('student.store') }}" id="myForm" enctype="multipart/form-data">
             @csrf
                 <div class="form-group">
                     <label for="Nim">Nim</label>
@@ -42,14 +42,18 @@
                     <label for="Major">Major</label>
                     <input type="Major" name="Major" class="form-control" id="Major" ariadescribedby="Major" >
                 </div>
-                {{-- <div class="form-group">
+                <div class="form-group">
                     <label for="Address">Address</label>
                     <input type="Address" name="Address" class="form-control" id="Address" ariadescribedby="Address" >
                 </div>
                 <div class="form-group">
                     <label for="Dob">Date of Birth<br>(YYYY-MM-DD)</label>
                     <input type="Dob" name="Dob" class="form-control" id="Dob" ariadescribedby="Dob" >
-                </div> --}}
+                </div>
+                <div class="form-group">
+                    <label for="Photo">Photo</label>
+                    <input type="file" name="Photo" class="form-control mb-3" id="Photo" aria-describedby="Photo">
+                </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             </div>

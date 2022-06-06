@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\StudentController;
 
 /*
@@ -21,3 +22,7 @@ use App\Http\Controllers\StudentController;
 Route::resource('student', StudentController::class);
 
 Route::get('/student/{student}/nilai', [StudentController::class, 'nilai'])->name('student.nilai');
+
+Route::resource('articles', ArticleController::class);
+
+Route::get('/student/{student}/nilai/pdf', [StudentController::class, 'print'])->name('student.print');

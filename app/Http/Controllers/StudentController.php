@@ -7,6 +7,8 @@ use App\Models\Student;
 use App\Models\ClassModel;
 use App\Models\Course;
 use App\Models\CourseStudent;
+use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use DB;
 
 class StudentController extends Controller
@@ -54,12 +56,21 @@ class StudentController extends Controller
             'Name' => 'required',
             'Class' => 'required',
             'Major' => 'required',
+            'Address' => 'required',
+            'Dob' => 'required',
+            'Photo' => 'required'
         ]);
+
+        if ($request->file('Photo')) {
+            $photo_name = $request->file('Photo')->store('image', 'public');
+        }
 
         $student = new Student;
         $student->nim = $request->get('Nim');
         $student->name = $request->get('Name');
         $student->major = $request->get('Major');
+        $student->dob = $request->get('Dob');
+        $student->photo = $photo_name;
         $student->save();
 
         $class = new ClassModel;
@@ -122,6 +133,9 @@ class StudentController extends Controller
             'Name' => 'required',
             'Class' => 'required',
             'Major' => 'required',
+            'Address' => 'required',
+            'DOB' => 'required',
+            'Photo' => 'required'
         ]);
 
  //Eloquent function to update the data
@@ -130,6 +144,15 @@ class StudentController extends Controller
         $student->nim = $request->get('Nim');
         $student->name = $request->get('Name');
         $student->major = $request->get('Major');
+
+        if ($student->photo && file_exists(storage_path('app/public/'. $student->photo))) {
+            Storage::delete(['public/', $student->photo]);
+        }
+
+        $photo_name = $request->file('Photo')->store('image', 'public');
+        $student->photo = $photo_name;
+        $student->address = $request->get('Address');
+        $student->dob = $request->get('DOB');
         $student->save();
 
         $class = new ClassModel;

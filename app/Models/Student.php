@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 class Student extends Model
 {
     protected $table='student'; // Eloquent will create a student model to store records in the student table
-    protected  $primaryKey = 'id_student'; // Calling DB contents with primary key
+    protected  $primaryKey = 'nim'; // Calling DB contents with primary key
     /**
 *	The attributes that are mass assignable.
      *
@@ -23,10 +23,11 @@ class Student extends Model
     protected $fillable = [
         'Nim',
         'Name',
-        'Class',
+        'class_id',
         'Major',
         'Address',
         'Dob',
+        'Photo'
     ];
 
     public function class()
